@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title> React! React</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+<style>
+
+#container {
+    padding: 50px;
+    background-color: #EEE;
+}
+
+#container {
+    font-size: 14px;
+    font-family: sans-serif;
+    color: #0080A8;
+}
+</style>
+
+</head>
+
+<body>
+<div id="container"></div>
+
+    <script type="text/babel">
+
+
+
+
+
+class FileSystem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      files: [
+        {
+          name: 'Folder 1',
+          type: 'folder',
+          children: [
+            { name: 'File 1', type: 'file' },
+            { name: 'File 2', type: 'file' },
+            {
+              name: 'Subfolder',
+              type: 'folder',
+              children: [{ name: 'File 3', type: 'file' }],
+            },
+          ],
+        },
+        { name: 'File 4', type: 'file' },
+      ],
+    };
+  }
+
+  renderFolder(folder) {
+    return (
+      <div key={folder.name}>
+        <strong>{folder.name}</strong>
+        {folder.children.map((item) => {
+          if (item.type === 'folder') {
+            return this.renderFolder(item);
+          } else {
+            return <div key={item.name}>{item.name}</div>;
+          }
+        })}
+      </div>
+    );
+  }
+
+  render() {
+    const { files } = this.state;
+
+    return (
+      <div>
+        <h1>File System</h1>
+        {files.map((item) => {
+          if (item.type === 'folder') {
+            return this.renderFolder(item);
+          } else {
+            return <div key={item.name}>{item.name}</div>;
+          }
+        })}
+      </div>
+    );
+  }
+}
+
+
+
+
+
+
+
+    ReactDOM.render(
+        <div>
+        <FileSystem/>
+         </div>,    
+
+    document.querySelector("#container")
+);
+
+
+
+
+    </script>
+</body>
+</html>

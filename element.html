@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title> React! React</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+<style>
+
+#container {
+    padding: 50px;
+    background-color: #EEE;
+}
+
+#container {
+    font-size: 14px;
+    font-family: sans-serif;
+    color: #0080A8;
+}
+</style>
+
+</head>
+
+<body>
+<div id="container"></div>
+
+    <script type="text/babel">
+
+
+
+
+
+
+class ButtonGroup extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      checkboxChecked: false,
+      radioSelected: '',
+      buttonClicked: ''
+    };
+  }
+
+  handleCheckboxChange = (event) => {
+    // Обработчик изменения состояния чекбокса
+    this.setState({ checkboxChecked: event.target.checked });
+  };
+
+  handleRadioChange = (event) => {
+    // Обработчик изменения выбранной радио-кнопки
+    this.setState({ radioSelected: event.target.value });
+  };
+
+  handleButtonClick = (event) => {
+    // Обработчик клика по обычной кнопке
+    const buttonClicked = event.target.textContent;
+    this.setState({ buttonClicked });
+  };
+
+  render() {
+    return (
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={this.state.checkboxChecked}
+            onChange={this.handleCheckboxChange}
+          />
+          Чекбокс
+        </label>
+
+        <br />
+
+        <label>
+          <input
+            type="radio"
+            name="radioButton"
+            value="option1"
+            checked={this.state.radioSelected === 'option1'}
+            onChange={this.handleRadioChange}
+          />
+          Опция 1
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="radioButton"
+            value="option2"
+            checked={this.state.radioSelected === 'option2'}
+            onChange={this.handleRadioChange}
+          />
+          Опция 2
+        </label>
+
+        <br />
+
+        <button onClick={this.handleButtonClick}>Обычная кнопка 1</button>
+        <button onClick={this.handleButtonClick}>Обычная кнопка 2</button>
+        <button onClick={this.handleButtonClick}>Обычная кнопка 3</button>
+
+        <p>Состояние чекбокса: {this.state.checkboxChecked ? 'Включено' : 'Выключено'}</p>
+        <p>Выбрана радио-кнопка: {this.state.radioSelected}</p>
+        <p>Нажата обычная кнопка: {this.state.buttonClicked}</p>
+      </div>
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+    ReactDOM.render(
+        <div>
+        <ButtonGroup/>
+         </div>,    
+
+    document.querySelector("#container")
+);
+
+
+
+
+    </script>
+</body>
+</html>

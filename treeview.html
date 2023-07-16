@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title> React! React</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+<style>
+
+#container {
+    padding: 50px;
+    background-color: #EEE;
+}
+
+#container {
+    font-size: 14px;
+    font-family: sans-serif;
+    color: #0080A8;
+}
+</style>
+
+</head>
+
+<body>
+<div id="container"></div>
+
+    <script type="text/babel">
+
+
+
+
+
+class TreeNode extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      expanded: false
+    };
+  }
+
+  toggleExpanded = () => {
+    this.setState((prevState) => ({
+      expanded: !prevState.expanded
+    }));
+  };
+
+  render() {
+    const { label, children } = this.props;
+    const { expanded } = this.state;
+
+    return (
+      <div>
+        <div onClick={this.toggleExpanded}>
+          {expanded ? '▼' : '►'} {label}
+        </div>
+        {expanded && (
+          <div style={{ marginLeft: '20px' }}>
+            {children}
+          </div>
+        )}
+      </div>
+    );
+  }
+}
+
+class TreeView extends React.Component {
+  render() {
+    return (
+      <TreeNode label="Root">
+        <TreeNode label="Node 1">
+          <TreeNode label="Leaf 1.1" />
+          <TreeNode label="Leaf 1.2" />
+        </TreeNode>
+        <TreeNode label="Node 2">
+          <TreeNode label="Leaf 2.1" />
+          <TreeNode label="Leaf 2.2" />
+        </TreeNode>
+      </TreeNode>
+    );
+  }
+}
+
+
+
+
+
+
+
+    ReactDOM.render(
+        <div>
+         <TreeView/>
+         </div>,    
+
+    document.querySelector("#container")
+);
+
+
+
+
+    </script>
+</body>
+</html>

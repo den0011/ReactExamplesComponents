@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title> React! React</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+<style>
+
+#container {
+    padding: 50px;
+    background-color: #EEE;
+}
+
+#container {
+    font-size: 14px;
+    font-family: sans-serif;
+    color: #0080A8;
+}
+</style>
+
+</head>
+
+<body>
+<div id="container"></div>
+
+    <script type="text/babel">
+
+
+
+class ButtonGroup extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      buttonText: ''
+    };
+  }
+
+  handleClick = (event) => {
+    // Обработчик клика на кнопку
+    const buttonText = event.target.textContent;
+    this.setState({ buttonText });
+  };
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.handleClick}>Кнопка 1</button>
+        <button onClick={this.handleClick}>Кнопка 2</button>
+        <button onClick={this.handleClick}>Кнопка 3</button>
+        <p>Текст кнопки: {this.state.buttonText}</p>
+      </div>
+    );
+  }
+}
+
+
+
+
+    ReactDOM.render(
+        <div>
+        <ButtonGroup/>
+         </div>,    
+
+    document.querySelector("#container")
+);
+
+
+
+
+    </script>
+</body>
+</html>
