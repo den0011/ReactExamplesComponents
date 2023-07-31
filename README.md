@@ -34,3 +34,19 @@
 - treeview.html
 
 	<p align="center"><img src="./img/treeview.jpg" alt="treeview"/></p>
+
+- calendar.html
+
+	<p align="center"><img src="./img/calendar.jpg" alt="calendar"/></p>
+
+- simple_chart.html
+
+   <p align="center"><img src="./img/simple_chart.jpg" alt="simple_chart"/></p>
+
+-  line_chart.html
+
+	<p align="center"><img src="./img/line_chart.jpg" alt="line_chart"/></p>
+
+- pie_chart.html
+
+	<p align="center"><img src="./img/pie_chart.jpg" alt="pie_chart"/></p>

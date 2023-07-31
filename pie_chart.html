@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title> React! React</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+<style>
+
+#container {
+    padding: 50px;
+    background-color: #EEE;
+}
+
+#container {
+    font-size: 14px;
+    font-family: sans-serif;
+    color: #0080A8;
+}
+</style>
+
+</head>
+
+<body>
+<div id="container"></div>
+
+    <script type="text/babel">
+
+
+
+class PieChart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.canvasRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.drawChart();
+  }
+
+  componentDidUpdate() {
+    this.drawChart();
+  }
+
+  drawChart() {
+    const canvas = this.canvasRef.current;
+    const ctx = canvas.getContext('2d');
+
+    const data = [30, 50, 20];
+    const labels = ['A', 'B', 'C'];
+
+    const chartWidth = 200;
+    const chartHeight = 200;
+    const total = data.reduce((sum, value) => sum + value, 0);
+    let startAngle = 0;
+
+    ctx.clearRect(0, 0, chartWidth, chartHeight);
+
+    for (let i = 0; i < data.length; i++) {
+      const sliceAngle = (2 * Math.PI * data[i]) / total;
+      ctx.fillStyle = getRandomColor();
+      ctx.beginPath();
+      ctx.moveTo(chartWidth / 2, chartHeight / 2);
+      ctx.arc(chartWidth / 2, chartHeight / 2, chartHeight / 2, startAngle, startAngle + sliceAngle);
+      ctx.lineTo(chartWidth / 2, chartHeight / 2);
+      ctx.fill();
+      startAngle += sliceAngle;
+
+      ctx.fillText(labels[i], chartWidth + 10, 20 + i * 30);
+    }
+  }
+
+  render() {
+    return <canvas ref={this.canvasRef} width="240" height="240" />;
+  }
+}
+
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+
+
+    ReactDOM.render(
+        <div>
+        <PieChart/>
+         </div>,    
+
+    document.querySelector("#container")
+);
+
+
+
+
+    </script>
+</body>
+</html>

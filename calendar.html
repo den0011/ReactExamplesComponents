@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title> React! React</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+<style>
+
+#container {
+    padding: 50px;
+    background-color: #EEE;
+}
+
+#container {
+    font-size: 14px;
+    font-family: sans-serif;
+    color: #0080A8;
+}
+
+.Calendar-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.Calendar-buttons button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.Calendar-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.Calendar-buttons button:focus {
+  outline: none;
+}
+
+.Calendar {
+  font-family: Arial, sans-serif;
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Calendar h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.Calendar table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.Calendar th,
+.Calendar td {
+  text-align: center;
+  padding: 8px;
+}
+
+.Calendar th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.Calendar td {
+  border: 1px solid #ccc;
+}
+
+.Calendar td:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.Calendar button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.Calendar button:hover {
+  background-color: #0056b3;
+}
+
+.Calendar button:focus {
+  outline: none;
+}
+
+
+</style>
+
+</head>
+
+<body>
+    
+<div id="container"></div>
+
+<script type="text/babel">
+
+
+
+
+class Calendar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentDate: new Date()
+    };
+  }
+
+  goToPreviousMonth = () => {
+    const { currentDate } = this.state;
+    let previousMonthYear = currentDate.getFullYear();
+    let previousMonth = currentDate.getMonth() - 1;
+
+    if (previousMonth < 0) {
+      previousMonth = 11; // 11 - декабрь (январь - 0)
+      previousMonthYear -= 1;
+    }
+
+    this.setState({ currentDate: new Date(previousMonthYear, previousMonth, 1) });
+  };
+
+  goToNextMonth = () => {
+    const { currentDate } = this.state;
+    let nextMonthYear = currentDate.getFullYear();
+    let nextMonth = currentDate.getMonth() + 1;
+
+    if (nextMonth > 11) {
+      nextMonth = 0; // 0 - январь (декабрь - 11)
+      nextMonthYear += 1;
+    }
+
+    this.setState({ currentDate: new Date(nextMonthYear, nextMonth, 1) });
+  };
+
+  render() {
+    const { currentDate } = this.state;
+    const year = currentDate.getFullYear();
+    const month = currentDate.toLocaleString('default', { month: 'long' });
+    const firstDayOfMonth = new Date(year, currentDate.getMonth(), 1).getDay();
+    const daysInMonth = new Date(year, currentDate.getMonth() + 1, 0).getDate();
+
+    // Создание массива чисел от 1 до количества дней в месяце
+    const daysArray = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+
+    // Определяем индекс первого дня месяца в массиве daysArray
+    const firstDayIndex = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
+
+    // Создаем массив, который содержит все дни месяца, включая пустые ячейки до начала месяца
+    const calendarDaysArray = [...Array(firstDayIndex).fill(''), ...daysArray];
+
+    // Определяем индекс последнего дня месяца в массиве calendarDaysArray
+    const lastDayIndex = calendarDaysArray.length - 1;
+
+    // Добавляем пустые ячейки после последнего дня месяца
+    while (calendarDaysArray.length % 7 !== 0) {
+      calendarDaysArray.push('');
+    }
+
+    return (
+      <div className="Calendar">
+        <div>
+          <h1>{month} {year}</h1>
+          <div className="Calendar-buttons">
+          <button onClick={this.goToPreviousMonth}>Предыдущий месяц</button>
+          <button onClick={this.goToNextMonth}>Следующий месяц</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Пн</th>
+                <th>Вт</th>
+                <th>Ср</th>
+                <th>Чт</th>
+                <th>Пт</th>
+                <th>Сб</th>
+                <th>Вс</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.from({ length: calendarDaysArray.length / 7 }, (_, weekIndex) => (
+                <tr key={weekIndex}>
+                  {Array.from({ length: 7 }, (_, dayIndex) => (
+                    <td key={dayIndex}>
+                      {calendarDaysArray[weekIndex * 7 + dayIndex] ? calendarDaysArray[weekIndex * 7 + dayIndex] : ''}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+}
+
+
+    ReactDOM.render(
+        <div>
+        <Calendar/>
+         </div>,    
+
+    document.querySelector("#container")
+);
+
+
+
+
+    </script>
+</body>
+</html>

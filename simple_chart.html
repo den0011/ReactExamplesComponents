@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title> React! React</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+<style>
+
+#container {
+    padding: 50px;
+    background-color: #EEE;
+}
+
+#container {
+    font-size: 14px;
+    font-family: sans-serif;
+    color: #0080A8;
+}
+</style>
+
+</head>
+
+<body>
+<div id="container"></div>
+
+    <script type="text/babel">
+
+
+
+class SimpleChart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.canvasRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.drawChart();
+  }
+
+  componentDidUpdate() {
+    this.drawChart();
+  }
+
+  drawChart() {
+    const canvas = this.canvasRef.current;
+    const ctx = canvas.getContext('2d');
+
+    const data = [12, 19, 3, 5, 2, 3, 8];
+    const labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+
+    const chartHeight = 200;
+    const chartWidth = 400;
+    const barWidth = chartWidth / data.length;
+    const maxValue = Math.max(...data);
+    const scale = chartHeight / maxValue;
+
+    ctx.clearRect(0, 0, chartWidth, chartHeight);
+    ctx.fillStyle = 'lightblue';
+
+    for (let i = 0; i < data.length; i++) {
+      const barHeight = data[i] * scale;
+      const x = i * barWidth;
+      const y = chartHeight - barHeight;
+      ctx.fillRect(x, y, barWidth, barHeight);
+    }
+
+    ctx.fillStyle = 'black';
+    ctx.font = '14px Arial';
+
+    for (let i = 0; i < labels.length; i++) {
+      const x = i * barWidth + barWidth / 2;
+      const y = chartHeight + 20;
+      ctx.fillText(labels[i], x, y, barWidth);
+    }
+  }
+
+  render() {
+    return <canvas ref={this.canvasRef} width="400" height="220" />;
+  }
+}
+
+
+
+    ReactDOM.render(
+        <div>
+        <SimpleChart/>
+         </div>,    
+
+    document.querySelector("#container")
+);
+
+
+
+
+    </script>
+</body>
+</html>
