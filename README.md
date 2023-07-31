@@ -50,3 +50,7 @@
 - pie_chart.html
 
 	<p align="center"><img src="./img/pie_chart.jpg" alt="pie_chart"/></p>
+    
+- calculator.html
+
+	<p align="center"><img src="./img/calculator.jpg" alt="calculator"/></p>

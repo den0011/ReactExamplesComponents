@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title> React! React</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+<style>
+
+#container {
+    padding: 50px;
+    background-color: #EEE;
+}
+
+#container {
+    font-size: 14px;
+    font-family: sans-serif;
+    color: #0080A8;
+}
+
+
+.calculator {
+  width: 300px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: grid;
+ 
+  
+}
+
+.display {
+  grid-column: 1 / -1;
+  height: 90px;
+  font-size: 24px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  
+  padding-right: 10px;
+  background-color: #ffffff;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+ 
+}
+
+.button {
+  flex: 2; /* Увеличили значение flex */
+  height: 60px;
+  width: 60px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4a4a4a;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-right: 10px;
+}
+
+.button:hover {
+  background-color: #373737;
+}
+
+
+
+
+
+</style>
+
+</head>
+
+<body>
+<div id="container"></div>
+
+    <script type="text/babel">
+
+class Calculator extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: '',
+    };
+  }
+
+  handleButtonPress = (value) => {
+    if (value === '=') {
+      try {
+        const result = eval(this.state.input);
+        this.setState({ input: result.toString() });
+      } catch (error) {
+        this.setState({ input: '' });
+      }
+    } else if (value === 'C') {
+      this.setState({ input: '' });
+    } else {
+      this.setState((prevState) => ({ input: prevState.input + value }));
+    }
+  };
+
+  render() {
+    const { input } = this.state;
+
+    return (
+      <div className="calculator">
+        <div className="display">{input}</div>
+        <div className="buttons">
+          <div className="row">
+            <Button label="7" onPress={() => this.handleButtonPress('7')} />
+            <Button label="8" onPress={() => this.handleButtonPress('8')} />
+            <Button label="9" onPress={() => this.handleButtonPress('9')} />
+            <Button label="/" onPress={() => this.handleButtonPress('/')} />
+          </div>
+          <div className="row">
+            <Button label="4" onPress={() => this.handleButtonPress('4')} />
+            <Button label="5" onPress={() => this.handleButtonPress('5')} />
+            <Button label="6" onPress={() => this.handleButtonPress('6')} />
+            <Button label="*" onPress={() => this.handleButtonPress('*')} />
+          </div>
+          <div className="row">
+            <Button label="1" onPress={() => this.handleButtonPress('1')} />
+            <Button label="2" onPress={() => this.handleButtonPress('2')} />
+            <Button label="3" onPress={() => this.handleButtonPress('3')} />
+            <Button label="-" onPress={() => this.handleButtonPress('-')} />
+          </div>
+          <div className="row">
+            <Button label="0" onPress={() => this.handleButtonPress('0')} />
+            <Button label="." onPress={() => this.handleButtonPress('.')} />
+            <Button label="=" onPress={() => this.handleButtonPress('=')} />
+            <Button label="+" onPress={() => this.handleButtonPress('+')} />
+          </div>
+          <div className="row">
+            <Button label="C" onPress={() => this.handleButtonPress('C')} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+class Button extends React.Component {
+  render() {
+    const { label, onPress } = this.props;
+    return <div className="button" onClick={onPress}>{label}</div>;
+  }
+}
+
+
+    ReactDOM.render(
+        <div>
+        <Calculator/>
+         </div>,    
+
+    document.querySelector("#container")
+);
+
+
+
+
+    </script>
+</body>
+</html>
